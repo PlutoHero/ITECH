@@ -1,0 +1,28 @@
+перечень палат, в которых дежурит выбранная медсестра;
+select name from WARD where ID_WARD in (select FID_WARD from NURSE_WARD where FID_NURSE = (SELECT ID_NURSE from NURSE WHERE name = 'string'))
+
+медсестры выбранного отделения;
+select name from NURSE where ID_NURSE in (select FID_NURSE from NURSE_WARD where FID_WARD = (SELECT ID_WARD from WARD WHERE name = 'string'))
+
+дежурства (в любых палатах) в указанную смену.
+select * from NURSE where shift = 'string'
+
+
+CREATE TABLE nurse( 
+`id_Nurse` INT NOT NULL AUTO_INCREMENT ,
+`name` VARCHAR(11) NOT NULL ,
+`date` DATE NOT NULL , 
+`department` INT(11) NOT NULL , 
+`shift` VARCHAR(11) NOT NULL , 
+PRIMARY KEY (`id`))
+
+create table Ward(
+`id_ward` INT NOT NULL AUTO_INCREMENT ,
+`name` VARCHAR(11) NOT NULL ,
+PRIMARY KEY (`id`))
+
+create table Nurse_Ward(
+FID_Nurse int,
+FID_Ward int,
+CONSTRAINT Nurse_fk FOREIGN KEY (FID_Nurse) REFERENCES nurse(ID_Nurse),
+CONSTRAINT Ward_fk2 FOREIGN KEY (FID_Ward) REFERENCES Ward (ID_Ward))
